@@ -13,8 +13,14 @@ pip install -r requirements.txt
 # Scrape loan data
 python scraper.py
 
-# Run the system
-python conversational_rag_with_llm.py --no-llm
+# Preprocessing
+python processing.py
+
+# RAG without LLM response generation (retrieves chunks)
+python rag.py
+
+# RAG with LLM response generation
+python rag-2.py
 ```
 
 ---
