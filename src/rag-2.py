@@ -37,13 +37,12 @@ class ConversationalLoanRAG:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True)
         
-        # LLM configuration
         self.use_llm = use_llm
         self.llm_provider = llm_provider
         self.llm_model = llm_model
         self.llm_client = None
         
-        # Conversation history
+        
         self.conversation_history = []
         
         # Initialize components
@@ -51,11 +50,11 @@ class ConversationalLoanRAG:
         self.model = SentenceTransformer(model_name)
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         
-        # Initialize LLM if requested
+       
         if self.use_llm:
             self._init_llm()
         
-        # Load or build index
+        
         self.documents = None
         self.index = None
         self.load_or_build_index()
@@ -71,18 +70,18 @@ class ConversationalLoanRAG:
                 import ollama
                 self.llm_client = ollama
                 
-                # Test if Ollama is running
+                
                 try:
                     ollama.list()
-                    print(f"[LLM] ✅ Ollama is running")
+                    print(f"[LLM]  Ollama is running")
                 except:
-                    print(f"[LLM] ⚠️  Ollama not running. Start with: ollama serve")
-                    print(f"[LLM] ⚠️  Falling back to rule-based generation")
+                    print(f"[LLM]   Ollama not running. Start with: ollama serve")
+                    print(f"[LLM]   Falling back to rule-based generation")
                     self.use_llm = False
                     
             except ImportError:
-                print("[LLM] ❌ Ollama not installed. Install: pip install ollama")
-                print("[LLM] ⚠️  Falling back to rule-based generation")
+                print("[LLM]  Ollama not installed. Install: pip install ollama")
+                print("[LLM]   Falling back to rule-based generation")
                 self.use_llm = False
         
         elif self.llm_provider == 'huggingface':
@@ -97,16 +96,16 @@ class ConversationalLoanRAG:
                 )
                 print(f"[LLM] ✅ Hugging Face model loaded")
             except ImportError:
-                print("[LLM] ❌ Transformers not installed. Install: pip install transformers")
-                print("[LLM] ⚠️  Falling back to rule-based generation")
+                print("[LLM]  Transformers not installed. Install: pip install transformers")
+                print("[LLM]   Falling back to rule-based generation")
                 self.use_llm = False
             except Exception as e:
-                print(f"[LLM] ❌ Error loading model: {e}")
-                print("[LLM] ⚠️  Falling back to rule-based generation")
+                print(f"[LLM]  Error loading model: {e}")
+                print("[LLM]   Falling back to rule-based generation")
                 self.use_llm = False
         
         else:
-            print(f"[LLM] ❌ Unknown provider: {self.llm_provider}")
+            print(f"[LLM]  Unknown provider: {self.llm_provider}")
             self.use_llm = False
     
     def get_cache_paths(self):
@@ -599,8 +598,8 @@ if __name__ == "__main__":
     parser.add_argument('--no-llm', action='store_true', help='Use rule-based generation instead of LLM')
     parser.add_argument('--provider', default='ollama', choices=['ollama', 'huggingface'],
                        help='LLM provider (default: ollama)')
-    parser.add_argument('--model', default='llama2',
-                       help='Model name (default: llama2 for ollama, microsoft/phi-2 for huggingface)')
+    parser.add_argument('--model', default='gpt-oss:20b-cloud',
+                       help='Model name (default: gpt-oss:20b-cloud for ollama, microsoft/phi-2 for huggingface)')
     parser.add_argument('--test', action='store_true', help='Run test queries')
     parser.add_argument('--data-file', help='Path to data file')
     

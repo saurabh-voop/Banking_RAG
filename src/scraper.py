@@ -41,7 +41,7 @@ class ImprovedBankScraper:
         return text
 
     def chunk_text(self, text: str, metadata: Dict) -> List[Dict]:
-        """Split long text into overlapping chunks for better retrieval"""
+        
         words = text.split()
         chunks = []
         
@@ -65,7 +65,7 @@ class ImprovedBankScraper:
         return chunks
 
     def is_valid_url(self, url):
-        """Check if URL is from Bank of Maharashtra domain"""
+        
         return 'bankofmaharashtra.bank.in' in url.lower()
     
     def fetch_page(self, url):

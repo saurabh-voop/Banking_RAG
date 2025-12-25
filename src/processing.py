@@ -21,7 +21,7 @@ class DataInspector:
         print("="*80)
         
         # 1. Basic stats
-        print(f"\n📊 BASIC STATISTICS:")
+        print(f"\n BASIC STATISTICS:")
         print(f"   Total records: {len(self.data)}")
         
         # 2. Check for empty texts
